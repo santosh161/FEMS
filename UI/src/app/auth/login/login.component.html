@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+  <div class="card shadow-lg border-0 rounded-4 p-4" style="width: 380px;">
+    <div class="text-center mb-3">
+      <h3 class="fw-bold">{{ 'LOGIN.TITLE' | translate }}</h3>
+      <p class="text-muted">{{ 'LOGIN.SUBTITLE' | translate }}</p>
+    </div>
+
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">{{ 'LOGIN.EMAIL' | translate }}</label>
+        <input type="email" id="email" class="form-control rounded-3" [(ngModel)]="email" name="email" required>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label">{{ 'LOGIN.PASSWORD' | translate }}</label>
+        <input type="password" id="password" class="form-control rounded-3" [(ngModel)]="password" name="password" required>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn btn-primary w-100 rounded-3" [disabled]="!loginForm.valid">
+        {{ 'LOGIN.BUTTON' | translate }}
+      </button>
+    </form>
+
+    <!-- Extra Links -->
+    <div class="text-center mt-3">
+      <small class="text-muted">{{ 'LOGIN.NO_ACCOUNT' | translate }} <a routerLink="/auth/register">{{ 'LOGIN.SIGNUP' | translate }}</a></small>
+    </div>
+  </div>
+</div>

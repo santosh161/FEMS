@@ -1,0 +1,48 @@
+{
+  "HELLO": "Hello",
+  "WELCOME": "Welcome to the Factory Employee Management System",
+  
+  "MENU": {
+    "DASHBOARD": "Dashboard",
+    "EMPLOYEES": "Employees",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Logout"
+  },
+  "LOGIN": {
+    "TITLE": "Welcome",
+    "SUBTITLE": "Please login to continue",
+    "EMAIL": "Email Address",
+    "PASSWORD": "Password",
+    "BUTTON": "Login",
+    "NO_ACCOUNT": "Don't have an account?",
+    "SIGNUP": "Sign up"
+  },
+  "OTP": {
+    "TITLE": "Verify OTP",
+    "SUBTITLE": "Enter the 4-digit code sent to your email/phone",
+    "BUTTON": "Verify OTP",
+    "NO_CODE": "Didn’t receive the code?",
+    "RESEND": "Resend OTP"
+  },
+"EMPLOYEE": {
+    "FACTORY_NAME": "Factory Name",
+    "EMPLOYEE_NAME": "Employee Name",
+    "EMPLOYEE_CODE": "Employee Code Number",
+    "ADDRESS": "Residential Address",
+    "VILLAGE": "Village Name",
+    "TALUKA": "Taluka",
+    "DISTRICT": "District",
+    "STATE": "State",
+    "DESIGNATION": "Designation",
+    "AADHAR": "Aadhar Card Number",
+    "PAN": "PAN Card Number",
+    "MOBILE1": "Mobile Number 1",
+    "MOBILE2": "Mobile Number 2",
+    "SALARY": "Monthly Salary",
+    "ADD_NEW": "Add New Employee",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "SUBMIT": "Submit",
+    "CANCEL": "Cancel"
+  }
+}
