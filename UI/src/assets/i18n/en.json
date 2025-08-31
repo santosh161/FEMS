@@ -6,6 +6,7 @@
     "DASHBOARD": "Dashboard",
     "EMPLOYEES": "Employees",
     "attendance": "Attendance",
+    "salary":"salary",
     "SETTINGS": "Settings",
     "LOGOUT": "Logout"
   },
@@ -52,7 +53,8 @@
    "attendance": "Attendance Details",
    "notAvalable":"No employees available. Please add one.",
    "addEmployee":"Add Employee",
-   "edditEmployee":"Edit Employee"
+   "edditEmployee":"Edit Employee",
+   "salaryHead":"Salary Details"
    
 
   }

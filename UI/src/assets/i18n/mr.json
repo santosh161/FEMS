@@ -6,6 +6,7 @@
     "DASHBOARD": "डॅशबोर्ड",
     "EMPLOYEES": "कर्मचारी",
     "attendance": "उपस्थिती",
+    "salary":"पगार",
     "SETTINGS": "सेटिंग्ज",
     "LOGOUT": "लॉगआउट"
   },
@@ -53,7 +54,8 @@
     "attendance": "उपस्थिती तपशील",
     "notAvalable":"उपलब्ध कर्मचारी नाहीत. कृपया एक जोडा.",
     "addEmployee":"कर्मचारी जोडा",
-    "edditEmployee":"कर्मचारी संपादित करा"
+    "edditEmployee":"कर्मचारी संपादित करा",
+    "salaryHead":"पगाराची माहिती"
     
    }
 }

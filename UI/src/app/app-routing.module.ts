@@ -18,7 +18,6 @@ const routes: Routes = [
     loadChildren: () => import('./component/dashboard/dashboard.module').then(m => m.DashboardModule),
     
   },
-  { path: 'attendance', loadChildren: () => import('./component/attendance/attendance.module').then(m => m.AttendanceModule) },
   
   { path: '**', redirectTo: 'auth/login' }
 ];

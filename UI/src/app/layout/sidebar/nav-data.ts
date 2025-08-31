@@ -10,10 +10,15 @@ export const navbardata=[
     label:'MENU.EMPLOYEES'  
    },
    {
-    routerLink:'employee-attendance',
-    icon:'fa-solid fa-clipboard-user',
-    label:'MENU.attendance'  
-   },
+    routerLink: 'employee-attendance',
+    icon: 'fa-solid fa-calendar-check', 
+    label: 'MENU.attendance'
+  },
+  {
+    routerLink: 'employee-salary',
+    icon: 'fa-solid fa-money-bill-wave', 
+    label: 'MENU.salary'
+  }
    
 //    {
 //     routerLink:'report',

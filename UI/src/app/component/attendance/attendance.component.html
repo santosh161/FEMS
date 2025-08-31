@@ -14,7 +14,7 @@
         <th>Employee Name</th>
         <th>Employee Code </th>
         <th> Add Attendance</th>
-        <th>Salary</th>
+        <th>Today's Attendance ({{ today }})</th>
       </tr>
     </thead>
     <tbody>
@@ -28,7 +28,11 @@
               </button>
         </td>
         <td> 
-           {{ emp.salary }}
+           <!-- {{ emp.Todays }} -->
+         <label class="switch">
+          <input type="checkbox" [(ngModel)]="emp.attendance" (change)="toggleAttendance(emp)">
+          <span class="slider round"></span>
+        </label>
       </td>
        
       </tr>
