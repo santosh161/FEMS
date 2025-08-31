@@ -21,10 +21,10 @@
     <tbody>
       <tr *ngFor="let emp of employees; let i = index">
         <td>{{ emp.factoryName }}</td>
-        <td>{{ emp.workerName }}</td>
-        <td>{{ emp.code }}</td>
+        <td>{{ emp.employeeName }}</td>
+        <td>{{ emp.employeeCode }}</td>
         <td>{{ emp.mobile1 }}</td>
-        <td>{{ emp.JoiningDate }}</td>
+        <td>{{ emp.createdDate }}</td>
         <td class="text-center">
           
           <button class="btn btn-sm btn-warning me-2" (click)="onEditEmployee(emp)">

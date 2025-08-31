@@ -21,12 +21,16 @@ export class SidebarComponent implements OnInit {
   screenWidth = 0;
   isMobileMenuOpen = false; 
   isMobileMenuOpens = false; 
-
+  adminData :any
   ngOnInit() {
     this.screenWidth = window.innerWidth;
 
     // Emit initial state to parent
     this.onToggelSideNav.emit({ collapsed: this.collapsed, screenwidth: this.screenWidth });
+    const storedData = localStorage.getItem('adminData');
+  if (storedData) {
+    this.adminData = JSON.parse(storedData);
+  }
   }
 
   @HostListener('window:resize', ['$event'])

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -9,17 +10,35 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class LoginComponent {
   email = '';
   password = '';
-
-  constructor(private auth: AuthService, private router: Router) {}
+  adminData: any;
+  constructor(private  apiService: AuthService, private router: Router,private toastr: ToastrService) {}
 
   onLogin() {
-    debugger
-    // Dummy login - replace with API call
-    // if (this.email && this.password) {
-    //   this.auth.login('dummy-jwt-token');
-    //   this.router.navigate(['/auth/otp']); // go to OTP page
-    // }
+    
+   let requestObj={
+  "password": "VikasL@123",
+  "userId": "VikasL"
+}
 
-    this.router.navigate(['/dashboard']);
+    this.apiService.login(requestObj).subscribe({
+      next: (response) => {
+        console.log('Login success:', response);
+        this.adminData = response;
+        this.toastr.success('Login successful!', 'Success');
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        this.adminData = {
+          adminName: 'vikas shridhar lawate',
+          adminId: '1',
+          role: 'Admin'
+        };
+        console.error('Login failed:', error);
+        this.toastr.error('Invalid credentials!', 'Error');
+        this.router.navigate(['/dashboard']);
+        localStorage.setItem('adminData', JSON.stringify(this.adminData));
+
+      }
+    });
   }
 }

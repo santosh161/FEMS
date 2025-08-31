@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { Employee } from 'src/app/model/employee.model';
 
 @Component({
@@ -7,33 +10,59 @@ import { Employee } from 'src/app/model/employee.model';
   styleUrls: ['./employee-details.component.scss']
 })
 export class EmployeeDetailsComponent {
-  employees: any[] = [
-    {
-      factoryName: 'ABC Factory',
-      workerName: 'Santosh Devkate',
-      code: 'EMP001',
-      mobile1: '9876543210',
-      JoiningDate: '2025-08-31'
-    },
-    {
-      factoryName: 'XYZ Factory',
-      workerName: 'Rohit Sharma',
-      code: 'EMP002',
-      mobile1: '9123456780',
-      JoiningDate: '2024-05-15'
-    },
-    {
-      factoryName: 'LMN Factory',
-      workerName: 'qwerty',
-      code: 'EMP003',
-      mobile1: '9988776655',
-      JoiningDate: '2023-11-20'
-    }
-  ];
+  employees: any[] = [];
   
   selectedEmployee: any = null; 
   showForm: boolean = false;    
+  adminData:any
+   constructor(private  apiService: AuthService, private router: Router,private toastr: ToastrService) {}
 
+  ngOnInit() {
+    const storedData = localStorage.getItem('adminData');
+    if (storedData) {
+      this.adminData = JSON.parse(storedData);
+    }
+    this.getEmployeeDetails();
+  }
+
+
+  getEmployeeDetails(){
+   let request ={
+      "admin":this.adminData.adminName,
+      "role": this.adminData.role
+    }
+    this.apiService.getEmpListDetails(request).subscribe({
+      next:(res)=>{
+        console.log(res);
+       this.employees=res;
+      },
+      error:(error)=>{
+     console.log(error);
+     this.employees = [
+      {
+        id: 2,
+        factoryName: "vithal sahakari",
+        employeeName: "Ramu",
+        employeeCode: "2",
+        address: "pandharpur",
+        village: "kassagoan",
+        taluka: "pandharpur",
+        district: "solapur",
+        state: "Maharashtra",
+        designation: "Mukadum",
+        aadhar: "123456654321",
+        pan: "gfddplo6543e",
+        mobile1: "1233212344",
+        mobile2: "string",
+        createdBy: "vikas l",
+        role: "manager",
+        createdDate: "2025-08-30T12:27:05.05"
+      }
+    ];
+
+      }
+    })
+  }
   // open form for new employee
   onAddEmployee() {
     this.selectedEmployee = null;

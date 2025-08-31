@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
 import { LayoutModule } from './layout/layout.module';
 import { EmployeeDetailsModule } from './component/employee-details/employee-details.module';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -44,7 +45,17 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AuthModule,
     CoreModule,
     LayoutModule,
-    EmployeeDetailsModule
+    EmployeeDetailsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center', // top-center
+      closeButton: false,                // no close button
+      timeOut: 3000,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      preventDuplicates: true,
+      toastClass: 'ngx-toastr toast-top-custom' // custom width/height
+    })
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
