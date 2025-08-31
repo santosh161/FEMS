@@ -3,15 +3,20 @@ import { CommonModule } from '@angular/common';
 
 import { AttendanceRoutingModule } from './attendance-routing.module';
 import { AttendanceComponent } from './attendance.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
-    AttendanceComponent
+    AttendanceComponent,
   ],
   imports: [
     CommonModule,
-    AttendanceRoutingModule
+    AttendanceRoutingModule,
+    TranslateModule,
+    FormsModule,
+        ReactiveFormsModule
   ]
 })
 export class AttendanceModule { }

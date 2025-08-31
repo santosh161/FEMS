@@ -37,7 +37,8 @@
     "DESIGNATION": "Designation",
     "AADHAR": "Aadhar Card Number",
     "PAN": "PAN Card Number",
-    "MOBILE1": "Mobile Number 1",
+    "salary": "Salary",
+    "JDate": "Joining Date",
     "MOBILE2": "Mobile Number 2",
     "SALARY": "Monthly Salary",
     "ADD_NEW": "Add New Employee",
@@ -48,6 +49,7 @@
   },
   "EMPLOYEEDETAILS":{
    "TableHead": "Employee Details",
+   "attendance": "Attendance Details",
    "notAvalable":"No employees available. Please add one.",
    "addEmployee":"Add Employee",
    "edditEmployee":"'Edit Employee"

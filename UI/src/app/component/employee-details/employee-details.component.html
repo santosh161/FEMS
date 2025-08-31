@@ -10,11 +10,11 @@
   <table class="table table-striped table-hover" *ngIf="employees.length > 0; else noData">
     <thead class="table-dark">
       <tr>
-        <th>Factory</th>
-        <th>Name</th>
-        <th>Code</th>
+        <th>Factory Name</th>
+        <th>Employee Name</th>
+        <th>Employee Code </th>
         <th>Mobile</th>
-        <!-- <th>Salary</th> -->
+        <th>Joining Date</th>
         <th class="text-center">Actions</th>
       </tr>
     </thead>
@@ -22,13 +22,11 @@
       <tr *ngFor="let emp of employees; let i = index">
         <td>{{ emp.factoryName }}</td>
         <td>{{ emp.workerName }}</td>
-        <td>{{ emp.workerCode }}</td>
+        <td>{{ emp.code }}</td>
         <td>{{ emp.mobile1 }}</td>
-        <!-- <td>{{ emp.salary }}</td> -->
+        <td>{{ emp.JoiningDate }}</td>
         <td class="text-center">
-            <button class="btn btn-sm btn-warning me-2" (click)="onEditEmployee(emp)">
-            <i class="fa-solid fa-eye-slash"></i>
-          </button>
+          
           <button class="btn btn-sm btn-warning me-2" (click)="onEditEmployee(emp)">
             <i class="fa fa-edit"></i>
           </button>

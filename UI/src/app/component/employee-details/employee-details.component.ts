@@ -7,7 +7,30 @@ import { Employee } from 'src/app/model/employee.model';
   styleUrls: ['./employee-details.component.scss']
 })
 export class EmployeeDetailsComponent {
-employees: any[] = [];
+  employees: any[] = [
+    {
+      factoryName: 'ABC Factory',
+      workerName: 'Santosh Devkate',
+      code: 'EMP001',
+      mobile1: '9876543210',
+      JoiningDate: '2025-08-31'
+    },
+    {
+      factoryName: 'XYZ Factory',
+      workerName: 'Rohit Sharma',
+      code: 'EMP002',
+      mobile1: '9123456780',
+      JoiningDate: '2024-05-15'
+    },
+    {
+      factoryName: 'LMN Factory',
+      workerName: 'qwerty',
+      code: 'EMP003',
+      mobile1: '9988776655',
+      JoiningDate: '2023-11-20'
+    }
+  ];
+  
   selectedEmployee: any = null; 
   showForm: boolean = false;    
 
