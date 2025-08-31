@@ -1,8 +1,8 @@
 <div class="container mt-4" style="padding: 0px;">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4>Employee Details</h4>
+     <h4>{{ 'EMPLOYEEDETAILS.TableHead' | translate }}</h4> 
     <button class="btn btn-primary" (click)="onAddEmployee()">
-      <i class="fa fa-plus"></i> Add Employee
+      <i class="fa fa-plus"></i> {{ 'EMPLOYEEDETAILS.addEmployee' | translate }}
     </button>
   </div>
 
@@ -41,7 +41,7 @@
   </table>
 
   <ng-template #noData>
-    <div class="alert alert-info text-center">No employees available. Please add one.</div>
+    <div class="alert alert-info text-center">{{ 'EMPLOYEEDETAILS.notAvalable' | translate }}</div>
   </ng-template>
 
   <!-- Employee Form Modal -->
@@ -49,7 +49,10 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">{{ selectedEmployee ? 'Edit Employee' : 'Add Employee' }}</h5>
+          <h5 class="modal-title">
+            {{ selectedEmployee ? ('EMPLOYEEDETAILS.edditEmployee' | translate) : ('EMPLOYEEDETAILS.addEmployee' | translate) }}
+          </h5>
+          
           <button type="button" class="btn-close" (click)="onCloseForm()"></button>
         </div>
         <div class="modal-body">

@@ -10,9 +10,9 @@ export const navbardata=[
     label:'MENU.EMPLOYEES'  
    },
    {
-    routerLink:'employee-details',
+    routerLink:'employee-attendance',
     icon:'fa-solid fa-clipboard-user',
-    label:'MENU.EMPLOYEES'  
+    label:'MENU.attendance'  
    },
    
 //    {

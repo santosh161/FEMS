@@ -5,6 +5,7 @@
   "MENU": {
     "DASHBOARD": "Dashboard",
     "EMPLOYEES": "Employees",
+    "attendance": "Attendance",
     "SETTINGS": "Settings",
     "LOGOUT": "Logout"
   },
@@ -44,5 +45,14 @@
     "DELETE": "Delete",
     "SUBMIT": "Submit",
     "CANCEL": "Cancel"
+  },
+  "EMPLOYEEDETAILS":{
+   "TableHead": "Employee Details",
+   "notAvalable":"No employees available. Please add one.",
+   "addEmployee":"Add Employee",
+   "edditEmployee":"'Edit Employee"
+   
+
   }
+
 }

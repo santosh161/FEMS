@@ -5,6 +5,7 @@
   "MENU": {
     "DASHBOARD": "डॅशबोर्ड",
     "EMPLOYEES": "कर्मचारी",
+    "attendance": "उपस्थिती",
     "SETTINGS": "सेटिंग्ज",
     "LOGOUT": "लॉगआउट"
   },
@@ -44,6 +45,13 @@
     "DELETE": "हटवा",
     "SUBMIT": "सबमिट",
     "CANCEL": "रद्द करा"
-  }
+  },
+  "EMPLOYEEDETAILS":{
+    "TableHead": "कर्मचारी तपशील",
+    "notAvalable":"उपलब्ध कर्मचारी नाहीत. कृपया एक जोडा.",
+    "addEmployee":"कर्मचारी जोडा",
+    "edditEmployee":"कर्मचारी संपादित करा"
+    
+   }
 }
 
