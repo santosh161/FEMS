@@ -26,8 +26,9 @@ export class AttendanceComponent {
   selectedDate: Date = new Date();
   designations: string[] = ['Supervisor', 'Manager', 'Driver', 'Worker'];
   selectedDates: string[] = [];
-
-  // UI state
+  isAddPopupOpen = false;
+  // UI state'
+  newEmployee = { id: 0, name: '', designation: '', status: null };
   selectedDesignation: string = '';
   searchTerm: string = '';
   emp: any = { name: 'John Doe', designation: 'Developer', status: '' };
@@ -126,7 +127,7 @@ export class AttendanceComponent {
 
 
   openPopup() {
-    this.selectedDates = []; // reset on open
+    this.selectedDates = []; 
     this.isPopupOpen = true;
   }
 
@@ -139,7 +140,7 @@ export class AttendanceComponent {
     if (date && !this.selectedDates.includes(date)) {
       this.selectedDates.push(date);
     }
-    event.target.value = ""; // reset picker so user can pick same again
+    event.target.value = ""; 
   }
 
   removeDate(index: number) {
@@ -155,4 +156,24 @@ export class AttendanceComponent {
     }
   }
  
+  openAddPopup() {
+    this.isAddPopupOpen = true;
+    this.newEmployee = { id: 0, name: '', designation: '', status: null }; // reset form
+  }
+
+  closeAddPopup() {
+    this.isAddPopupOpen = false;
+  }
+
+  addEmployee() {
+    if (this.newEmployee.name && this.newEmployee.designation) {
+      const newId = this.employees.length > 0 
+        ? Math.max(...this.employees.map(e => e.id)) + 1 
+        : 1;
+      this.employees.push({ ...this.newEmployee, id: newId });
+      this.closeAddPopup();
+    } else {
+      alert('Please fill all fields.');
+    }
+  }
 }

@@ -51,11 +51,51 @@
         <option *ngFor="let d of designations" [value]="d">{{ d }}</option>
       </select>
     </div>
-    <div class="col-8">
-      <input type="text" class="form-control form-control-sm" placeholder="Search employees..."
+  
+    <!-- Search input (col-6) -->
+    <div class="col-6">
+      <input type="text"
+             class="form-control form-control-sm"
+             placeholder="Search employees..."
              [(ngModel)]="searchTerm" />
     </div>
+  
+    <!-- Plus Button (col-2) -->
+    <div class="col-2 d-flex justify-content-center align-items-center">
+      <button class="btn btn-sm btn-primary w-100 d-flex align-items-center justify-content-center gap-1"
+              (click)="openAddPopup()">
+        <span class="material-symbols-outlined">add</span>
+        <span class="d-none d-md-inline">Add Employee</span> <!-- hidden on mobile -->
+      </button>
+    </div>
   </div>
+  
+  
+  
+  <!-- ✅ Custom Add Employee Popup -->
+  <div class="custom-popup" *ngIf="isAddPopupOpen">
+    <div class="custom-popup-content">
+      <h5>Add Employee</h5>
+  
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" [(ngModel)]="newEmployee.name" />
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Designation</label>
+        <select class="form-select" [(ngModel)]="newEmployee.designation">
+          <option *ngFor="let d of designations" [value]="d">{{ d }}</option>
+        </select>
+      </div>
+  
+      <div class="d-flex justify-content-end gap-2">
+        <button class="btn btn-secondary" (click)="closeAddPopup()">Close</button>
+        <button class="btn btn-primary" (click)="addEmployee()">Submit</button>
+      </div>
+    </div>
+  </div>
+  
 
   <!-- Mark all label + actions -->
   <div class="mb-2 small text-muted">
@@ -79,11 +119,12 @@
   </div>
 
   <!-- Employee cards -->
-  <div *ngFor="let emp of filteredEmployees; trackBy: trackByEmployee" class="card shadow-sm mb-3 rounded-4">
+  <div *ngFor="let emp of filteredEmployees; let i = index trackBy: trackByEmployee" class="card shadow-sm mb-3 rounded-4">
     <div class="card-body">
       <div class="d-flex align-items-center justify-content-between">
         <!-- Left side -->
         <div class="d-flex align-items-center">
+          <div class="me-3 fw-bold text-primary">{{ i + 1 }}.</div>
           <div class="avatar me-3">
             {{ emp.name.split(' ')[0]?.charAt(0) }}{{ emp.name.split(' ')[1]?.charAt(0) || '' }}
           </div>
