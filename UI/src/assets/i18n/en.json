@@ -57,6 +57,13 @@
    "salaryHead":"Salary Details"
    
 
+  },
+  "ATTENDANCE":{
+   "full":"Full",
+   "half":"Half",
+   "late":"Late",
+   "absent":"Absent",
+   "pending":"Pending"
   }
 
 }

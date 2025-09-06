@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/services/auth.service';
+declare var bootstrap: any;
+
+
 //import { Employee } from 'src/app/model/employee.model';
 type Status = 'Full Day' | 'Half Day' | 'Late' | 'Absent' | null;
 
@@ -10,6 +13,7 @@ interface Employee {
   name: string;
   designation: string;
   status: Status;
+  
   // add other fields if needed (employeeCode, factory, etc.)
 }
 @Component({
@@ -21,10 +25,16 @@ export class AttendanceComponent {
   employees: Employee[] = [];
   selectedDate: Date = new Date();
   designations: string[] = ['Supervisor', 'Manager', 'Driver', 'Worker'];
+  selectedDates: string[] = [];
 
   // UI state
   selectedDesignation: string = '';
   searchTerm: string = '';
+  emp: any = { name: 'John Doe', designation: 'Developer', status: '' };
+  today: string = new Date().toISOString().split('T')[0];
+  isPopupOpen = false;
+  useselectedDate: string = '';
+
 
   ngOnInit(): void {
     // Dummy data (replace with API fetch)
@@ -113,4 +123,36 @@ export class AttendanceComponent {
   trackByEmployee(index: number, emp: Employee) {
     return emp.id;
   }
+
+
+  openPopup() {
+    this.selectedDates = []; // reset on open
+    this.isPopupOpen = true;
+  }
+
+  closePopup() {
+    this.isPopupOpen = false;
+  }
+
+  addDate(event: any) {
+    const date = event.target.value;
+    if (date && !this.selectedDates.includes(date)) {
+      this.selectedDates.push(date);
+    }
+    event.target.value = ""; // reset picker so user can pick same again
+  }
+
+  removeDate(index: number) {
+    this.selectedDates.splice(index, 1);
+  }
+
+  submitDates() {
+    if (this.selectedDates.length > 0) {
+      this.emp.status = `Updated with ${this.selectedDates.length} dates`;
+      this.closePopup();
+    } else {
+      alert('Please select at least one date!');
+    }
+  }
+ 
 }

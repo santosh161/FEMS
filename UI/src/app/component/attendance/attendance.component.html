@@ -82,21 +82,67 @@
   <div *ngFor="let emp of filteredEmployees; trackBy: trackByEmployee" class="card shadow-sm mb-3 rounded-4">
     <div class="card-body">
       <div class="d-flex align-items-center justify-content-between">
+        <!-- Left side -->
         <div class="d-flex align-items-center">
-          <div class="avatar me-3">{{ emp.name.split(' ')[0]?.charAt(0) }}{{ emp.name.split(' ')[1]?.charAt(0) || '' }}</div>
+          <div class="avatar me-3">
+            {{ emp.name.split(' ')[0]?.charAt(0) }}{{ emp.name.split(' ')[1]?.charAt(0) || '' }}
+          </div>
           <div>
             <div class="fw-semibold">{{ emp.name }}</div>
             <div class="small text-muted">{{ emp.designation }}</div>
           </div>
         </div>
-
-        <span class="badge"
-      [ngClass]="emp.status ? 'custom-badge' : 'bg-light text-dark'">
-  {{ emp.status ? emp.status : 'Not marked' }}
-      </span>
+      
+        <!-- Right side (edit + badge) -->
+        <div class="d-flex align-items-center gap-2">
+          <span class="material-symbols-outlined cursor-pointer" (click)="openPopup()">edit</span>
+          <span class="badge" [ngClass]="emp.status ? 'custom-badge' : 'bg-light text-dark'">
+            {{ emp.status ? emp.status : 'Not marked' }}
+          </span>
+        </div>
       </div>
+      
+      <!-- ✅ Custom Popup -->
+      <div class="custom-popup" *ngIf="isPopupOpen">
+        <div class="custom-popup-content">
+          <h5>Update Attendance</h5>
+      
+          <label for="attendanceDate" class="form-label">Select Dates</label>
+          <input type="date"
+                 id="attendanceDate"
+                 class="form-control mb-3"
+                 [max]="today"
+                 (change)="addDate($event)" />
+      
+          <!-- Show selected dates -->
+          <div *ngIf="selectedDates.length > 0" class="mb-3">
+            <strong>Selected Dates ({{ selectedDates.length }}):</strong>
+            <div class="selected-dates-vertical mt-2">
+              <div class="date-box" *ngFor="let d of selectedDates; let i = index">
+                <span class="number">{{ i + 1 }}.</span>
+                <span class="date">{{ d }}</span>
+                <span class="remove" (click)="removeDate(i)">✖</span>
+              </div>
+            </div>
+          </div>
+          
+          
+          
+      
+          <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-secondary" (click)="closePopup()">Close</button>
+            <button class="btn btn-primary" (click)="submitDates()">Submit</button>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+      
 
-      <div class="row g-2 mt-3">
+
+      <div class="row g-2 mt-1 attendance-row">
         <div class="col-6 col-md-3">
           <button class="btn w-100 btn-option"
                   [ngClass]="emp.status === 'Full Day' ? 'btn-success' : 'btn-outline-success'"
@@ -118,6 +164,7 @@
                   (click)="markAttendance(emp, 'Absent')">Absent</button>
         </div>
       </div>
+      
     </div>
   </div>
 
