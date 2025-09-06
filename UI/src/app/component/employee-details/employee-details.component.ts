@@ -8,140 +8,104 @@ interface Employee {
   id: number;
   name: string;
   designation: string;
-  attendance: string; // "Full Day" | "Half Day" | "Absent" | ""
+  factory: string;
+  salary: number;
+  mobile: string;
+  aadhar: string;
+  village: string;
 }
+
 @Component({
   selector: 'app-employee-details',
   templateUrl: './employee-details.component.html',
   styleUrls: ['./employee-details.component.scss']
 })
 export class EmployeeDetailsComponent {
-  employees: any[] = [];
-  
-  selectedEmployee: any = null; 
-  showForm: boolean = false;    
-  adminData:any
-   constructor(private  apiService: AuthService, private router: Router,private toastr: ToastrService) {}
+  employees: Employee[] = [];
+  filteredEmployees: Employee[] = [];
+  searchText: string = '';
 
-  ngOnInit() {
-    const storedData = localStorage.getItem('adminData');
-    if (storedData) {
-      this.adminData = JSON.parse(storedData);
-    }
-    this.getEmployeeDetails();
-  }
+  designations = ['Worker', 'Supervisor', 'Manager', 'Driver'];
+  factories: string[] = ['Factory A', 'Factory B', 'Factory C']; 
+  selectedEmployee: Employee | null = null;
+  isEmployeePopupOpen = false;
+  isAddMode = false;
+  selectedFactory: string = '';
 
-
-  getEmployeeDetails(){
-   let request ={
-      "admin":this.adminData.adminName,
-      "role": this.adminData.role
-    }
-    this.apiService.getEmpListDetails(request).subscribe({
-      next:(res)=>{
-        console.log(res);
-       this.employees=res;
-      },
-      error:(error)=>{
-     console.log(error);
-     this.employees = [
-      {
-        id: 2,
-        factoryName: "vithal sahakari",
-        employeeName: "Ramu",
-        employeeCode: "2",
-        address: "pandharpur",
-        village: "kassagoan",
-        taluka: "pandharpur",
-        district: "solapur",
-        state: "Maharashtra",
-        designation: "Mukadum",
-        aadhar: "123456654321",
-        pan: "gfddplo6543e",
-        mobile1: "1233212344",
-        mobile2: "string",
-        createdBy: "vikas l",
-        role: "manager",
-        createdDate: "2025-08-30T12:27:05.05"
-      }
+  ngOnInit(): void {
+    this.employees = [
+      { id: 1, name: 'John Smith', designation: 'Worker', factory: 'Factory A', salary: 18000, mobile: '9876543210', aadhar: '1234-5678-9012', village: 'Village X' },
+      { id: 2, name: 'Asha More', designation: 'Supervisor', factory: 'Factory B', salary: 22000, mobile: '9123456780', aadhar: '2345-6789-0123', village: 'Village Y' }
     ];
+    this.filteredEmployees = [...this.employees];
 
-      }
-    })
-  }
-  // open form for new employee
-  onAddEmployee() {
-    this.selectedEmployee = null;
-    this.showForm = true;
   }
 
-  // open form with existing employee for edit
-  onEditEmployee(emp: any) {
+
+
+  openAddEmployeePopup() {
+    this.selectedEmployee = { id: 0, name: '', designation: '', factory: '', salary: 0, mobile: '', aadhar: '', village: '' };
+    this.isAddMode = true;
+    this.isEmployeePopupOpen = true;
+  }
+
+  openEditEmployee(emp: Employee) {
     this.selectedEmployee = { ...emp };
-    this.showForm = true;
+    this.isAddMode = false;
+    this.isEmployeePopupOpen = true;
   }
 
-  // delete employee
-  onDeleteEmployee(index: number) {
-    if (confirm('Are you sure you want to delete this employee?')) {
-      this.employees.splice(index, 1);
-    }
+  closeEmployeePopup() {
+    this.isEmployeePopupOpen = false;
   }
 
-  // save new/edited employee
-  onSaveEmployee(emp: any) {
-    if (this.selectedEmployee) {
-      // update existing employee
-      const index = this.employees.findIndex(e => e.workerCode === this.selectedEmployee.workerCode);
-      if (index > -1) {
-        this.employees[index] = emp;
-      }
+  saveEmployee() {
+    if (!this.selectedEmployee) return;
+
+    if (this.isAddMode) {
+      this.selectedEmployee.id = this.employees.length + 1;
+      this.employees.push(this.selectedEmployee);
     } else {
-      // add new employee
-      this.employees.push(emp);
+      const index = this.employees.findIndex(e => e.id === this.selectedEmployee!.id);
+      if (index !== -1) this.employees[index] = this.selectedEmployee;
     }
-    this.showForm = false;
-    this.selectedEmployee = null;
+
+    this.filteredEmployees = [...this.employees];
+    this.closeEmployeePopup();
   }
 
-  // close form without saving
-  onCloseForm() {
-    this.showForm = false;
-    this.selectedEmployee = null;
-  }
-  designations = ['Supervisor', 'Manager', 'Driver'];
-  selectedDesignation = '';
-  searchText = '';
-  today = new Date();
-  selectedDate = this.today.toISOString().split('T')[0];
-
-  employeesList: Employee[] = [
-    { id: 1, name: 'Anna', designation: 'Driver', attendance: '' },
-    { id: 2, name: 'Ramesh', designation: 'Manager', attendance: '' },
-    { id: 3, name: 'Suresh', designation: 'Supervisor', attendance: '' }
-  ];
-
-  filteredEmployees(): Employee[] {
-    return this.employeesList.filter(emp => {
-      const matchDesignation = this.selectedDesignation
-        ? emp.designation === this.selectedDesignation
-        : true;
-      const matchSearch = this.searchText
-        ? emp.name.toLowerCase().includes(this.searchText.toLowerCase())
-        : true;
-      return matchDesignation && matchSearch;
-    });
+ 
+  trackByEmployee(index: number, emp: Employee) {
+    return emp.id;
   }
 
-  setAttendance(emp: Employee, status: string) {
-    emp.attendance = status;
+  // Ask for confirmation before deleting
+confirmDeleteEmployee(emp: Employee) {
+  const confirmed = confirm(`Are you sure you want to delete ${emp.name}?`);
+  if (confirmed) {
+    this.deleteEmployee(emp);
   }
+}
 
-  markAll(status: string) {
-    this.filteredEmployees().forEach(emp => emp.attendance = status);
-  }
+// Delete employee function
+deleteEmployee(emp: Employee) {
+  this.employees = this.employees.filter(e => e.id !== emp.id);
+  this.filteredEmployees = [...this.employees];
+}
 
-  clearAll() {
-    this.filteredEmployees().forEach(emp => emp.attendance = '');
-  }
+filterEmployees() {
+  const text = this.searchText.toLowerCase();
+  const factory = this.selectedFactory;
+
+  this.filteredEmployees = this.employees.filter(emp =>
+    // Filter by search text
+    (emp.name.toLowerCase().includes(text) ||
+     emp.designation.toLowerCase().includes(text) ||
+     emp.factory.toLowerCase().includes(text)) &&
+    // Filter by factory if selected
+    (factory === '' || emp.factory === factory)
+  );
+}
+
+
 }
