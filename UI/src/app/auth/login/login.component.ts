@@ -9,15 +9,15 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class LoginComponent {
   email = '';
-  password = '';
+  password = ''
   adminData: any;
   constructor(private  apiService: AuthService, private router: Router,private toastr: ToastrService) {}
 
   onLogin() {
     
    let requestObj={
-  "password": "VikasL@123",
-  "userId": "VikasL"
+  "password": "Santosh",
+  "userId": "1234"
 }
 
     this.apiService.login(requestObj).subscribe({
@@ -29,13 +29,13 @@ export class LoginComponent {
       },
       error: (error) => {
         this.adminData = {
-          adminName: 'vikas shridhar lawate',
+          adminName: 'santosh d',
           adminId: '1',
           role: 'Admin'
         };
         console.error('Login failed:', error);
         this.toastr.error('Invalid credentials!', 'Error');
-        // this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard']);
         localStorage.setItem('adminData', JSON.stringify(this.adminData));
 
       }
