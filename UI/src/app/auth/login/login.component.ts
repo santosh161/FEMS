@@ -35,7 +35,7 @@ export class LoginComponent {
         };
         console.error('Login failed:', error);
         this.toastr.error('Invalid credentials!', 'Error');
-        this.router.navigate(['/dashboard']);
+        // this.router.navigate(['/dashboard']);
         localStorage.setItem('adminData', JSON.stringify(this.adminData));
 
       }

@@ -1,0 +1,28 @@
+.attendance-container {
+  padding: 10px;
+  background: #f9f9f9;
+  min-height: 100vh;
+
+  .filter-row {
+    select, input {
+      font-size: 14px;
+      padding: 6px;
+    }
+  }
+
+  .bulk-actions button {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .employee-card {
+    border-radius: 12px;
+    .btn-group .btn {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+    .btn.active {
+      color: #fff;
+    }
+  }
+}

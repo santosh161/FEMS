@@ -2,8 +2,14 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { Employee } from 'src/app/model/employee.model';
+//import { Employee } from 'src/app/model/employee.model';
 
+interface Employee {
+  id: number;
+  name: string;
+  designation: string;
+  attendance: string; // "Full Day" | "Half Day" | "Absent" | ""
+}
 @Component({
   selector: 'app-employee-details',
   templateUrl: './employee-details.component.html',
@@ -102,5 +108,40 @@ export class EmployeeDetailsComponent {
   onCloseForm() {
     this.showForm = false;
     this.selectedEmployee = null;
+  }
+  designations = ['Supervisor', 'Manager', 'Driver'];
+  selectedDesignation = '';
+  searchText = '';
+  today = new Date();
+  selectedDate = this.today.toISOString().split('T')[0];
+
+  employeesList: Employee[] = [
+    { id: 1, name: 'Anna', designation: 'Driver', attendance: '' },
+    { id: 2, name: 'Ramesh', designation: 'Manager', attendance: '' },
+    { id: 3, name: 'Suresh', designation: 'Supervisor', attendance: '' }
+  ];
+
+  filteredEmployees(): Employee[] {
+    return this.employeesList.filter(emp => {
+      const matchDesignation = this.selectedDesignation
+        ? emp.designation === this.selectedDesignation
+        : true;
+      const matchSearch = this.searchText
+        ? emp.name.toLowerCase().includes(this.searchText.toLowerCase())
+        : true;
+      return matchDesignation && matchSearch;
+    });
+  }
+
+  setAttendance(emp: Employee, status: string) {
+    emp.attendance = status;
+  }
+
+  markAll(status: string) {
+    this.filteredEmployees().forEach(emp => emp.attendance = status);
+  }
+
+  clearAll() {
+    this.filteredEmployees().forEach(emp => emp.attendance = '');
   }
 }
