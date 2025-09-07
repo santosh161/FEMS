@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { environment } from 'src/environment/environment';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
@@ -13,17 +13,18 @@ export class AuthService {
   // }
 
   login(request: any): Observable<any> {
-    let  baseUrl = 'https://localhost:44392/api/Auth';
+    
+    let  baseUrl = 'environment.apiUrl';
     return this.http.post(`${baseUrl}/login`, request);
   }
 
   getEmpListDetails(request: any) : Observable<any> {
-    let  baseUrl = 'https://localhost:44392/api/Auth';
+    let  baseUrl = 'environment.apiUrl';
     return this.http.post(`${baseUrl}/getEmployeeList`, request);
   }
 
  addEmployee(request: any): Observable<any>{
-  let baseUrl = 'https://localhost:44392/api/Auth'
+  let baseUrl = 'environment.apiUrl'
   return this.http.post(`${baseUrl}/registoreEmployee`, request);
  }
 
