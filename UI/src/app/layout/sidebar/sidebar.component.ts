@@ -21,6 +21,7 @@ export class SidebarComponent implements OnInit {
   screenWidth = 0;
   isMobileMenuOpen = false; 
   isMobileMenuOpens = false; 
+  ishamburger:boolean=true
   adminData :any
   ngOnInit() {
     this.screenWidth = window.innerWidth;
@@ -52,13 +53,16 @@ export class SidebarComponent implements OnInit {
   }
 
   closeSidenave() {
-    this.collapsed = false;
+    // this.collapsed = false;
+    this.ishamburger=true;
     this.isMobileMenuOpen = false;
     this.onToggelSideNav.emit({ collapsed: this.collapsed, screenwidth: this.screenWidth });
   }
 
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    this.ishamburger = !this.isMobileMenuOpen;
+
   }
 }
 

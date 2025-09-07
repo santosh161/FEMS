@@ -9,35 +9,40 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class LoginComponent {
   email = '';
-  password = ''
+  password = '';
+  selectedCompany = '';
+  companies: string[] = ['COMP1', 'COMP2', 'COMP3', 'COMP4', 'COMP5']; 
   adminData: any;
-  constructor(private  apiService: AuthService, private router: Router,private toastr: ToastrService) {}
+
+  constructor(
+    private apiService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   onLogin() {
-    
-   let requestObj={
-  "password": "Santosh",
-  "userId": "1234"
-}
+    if (!this.selectedCompany) {
+      this.toastr.error('Please select a company', 'Validation Error');
+      return;
+    }
+
+    let requestObj = {
+      userId: this.email,
+      password: this.password,
+      company: this.selectedCompany
+    };
 
     this.apiService.login(requestObj).subscribe({
       next: (response) => {
         console.log('Login success:', response);
         this.adminData = response;
+        localStorage.setItem('adminData', JSON.stringify(this.adminData));
         this.toastr.success('Login successful!', 'Success');
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {
-        this.adminData = {
-          adminName: 'santosh d',
-          adminId: '1',
-          role: 'Admin'
-        };
         console.error('Login failed:', error);
         this.toastr.error('Invalid credentials!', 'Error');
-        this.router.navigate(['/dashboard']);
-        localStorage.setItem('adminData', JSON.stringify(this.adminData));
-
       }
     });
   }

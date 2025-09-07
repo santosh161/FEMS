@@ -1,14 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
   <div class="container-fluid">
-    <!-- Logo -->
-    <a class="navbar-brand fw-bold logo-name">Factory App</a>
+    <!-- Logo (always visible) -->
+    <a class="navbar-brand fw-bold logo-name me-3">Factory App</a>
 
-    <!-- Mobile: Settings button + Logout on left -->
-    <div class="d-lg-none d-flex align-items-center mobile-buttons">
-      <button class="btn btn-outline-secondary me-2 btn-sm" (click)="toggleSettingsPopup()">
-        ⚙ Settings
+    <!-- Mobile: Settings + Logout (icons only) -->
+    <div class="d-flex d-lg-none align-items-center gap-2 ms-auto">
+      <button class="btn btn-outline-secondary btn-sm" (click)="toggleSettingsPopup()">
+        ⚙
       </button>
-      <button class="btn btn-danger btn-sm" (click)="logout()">⏻ Logout</button>
+      <button class="btn btn-danger btn-sm" (click)="logout()">
+        ⏻
+      </button>
     </div>
 
     <!-- Desktop: Language + Logout -->
@@ -32,32 +34,3 @@
     </div>
   </div>
 </nav>
-
-<!-- Custom Mobile Popup -->
-<div class="custom-popup" *ngIf="showSettingsPopup">
-  <div class="popup-content">
-    <div class="popup-header">
-      <h5>Settings</h5>
-      <button class="btn-close" (click)="toggleSettingsPopup()"></button>
-    </div>
-
-    <div class="popup-body-wrapper">
-      <!-- Scrollable Content -->
-      <div class="popup-body">
-        <!-- Language Dropdown -->
-        <div class="mb-3">
-          <label>Language:</label>
-          <select class="form-select" (change)="changeLanguage($any($event.target).value)">
-            <option *ngFor="let lang of languages" [value]="lang.code">
-              {{ lang.label }}
-            </option>
-          </select>
-        </div>
-        <!-- You can add more content here -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Overlay -->
-  <div class="popup-overlay" (click)="toggleSettingsPopup()"></div>
-</div>
