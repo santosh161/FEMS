@@ -39,12 +39,15 @@ export class LoginComponent {
         localStorage.setItem('adminData', JSON.stringify(this.adminData));
         this.toastr.success('Login successful!', 'Success');
         this.router.navigate(['/dashboard']);
+        localStorage.setItem('adminData', JSON.stringify(this.adminData));
       },
       error: (error) => {
         console.error('Login failed:', error);
         this.adminData = { adminName: 'santosh d', adminId: '1', role: 'Admin' };
         // this.toastr.error('Invalid credentials!', 'Error');
+        this.toastr.success('Login successful!', 'Success');
         this.router.navigate(['/dashboard']);
+        localStorage.setItem('adminData', JSON.stringify(this.adminData));
       }
     });
   }
