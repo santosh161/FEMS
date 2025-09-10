@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 interface Employee {
   id: number;
@@ -42,10 +43,14 @@ export class EmployeeDetailsComponent implements OnInit {
   isEmployeePopupOpen = false;
   isAddMode = false;
   selectedFactory: string = '';
-  constructor(private fb: FormBuilder) {}
+  adminData:any
+  constructor(private fb: FormBuilder,
+    private  apiService: AuthService
+  ) {}
   ngOnInit(): void {
 
     this.employeeForm = this.fb.group({
+      id: [0],   // 👈 include id
       firstName: ['', Validators.required],
       middleName: [''],
       lastName: ['', Validators.required],
@@ -64,6 +69,7 @@ export class EmployeeDetailsComponent implements OnInit {
       country: ['', Validators.required],
       state: ['', Validators.required],
     });
+    
 
 
     this.employees = [
@@ -111,6 +117,24 @@ export class EmployeeDetailsComponent implements OnInit {
     this.filteredEmployees = [...this.employees];
   }
 
+
+  getEmployeeDetails(){
+   let request ={
+      "admin":this.adminData.adminName,
+      "role": this.adminData.role
+    }
+    this.apiService.getEmpListDetails(request).subscribe({
+      next:(res)=>{
+        console.log(res);
+       this.employees=res;
+      },
+      error:(error)=>{
+     console.log(error);
+    
+
+      }
+    })
+  }
   openAddEmployeePopup() {
     this.selectedEmployee = {
       id: 0,
@@ -155,19 +179,23 @@ export class EmployeeDetailsComponent implements OnInit {
       this.employeeForm.markAllAsTouched();
       return;
     }
-
+  
     const employeeData = this.employeeForm.value;
-
+  
     if (this.isAddMode) {
-      employeeData.id = this.employees.length + 1;
+      employeeData.id = this.employees.length + 1; // new ID
       this.employees.push(employeeData);
     } else {
       const index = this.employees.findIndex(e => e.id === employeeData.id);
-      if (index !== -1) this.employees[index] = employeeData;
+      if (index !== -1) {
+        this.employees[index] = employeeData;
+      }
     }
-
+  
+    this.filteredEmployees = [...this.employees]; // 👈 refresh filter
     this.closeEmployeePopup();
   }
+  
 
   trackByEmployee(index: number, emp: Employee) {
     return emp.id;

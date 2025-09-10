@@ -11,6 +11,7 @@ import { CoreModule } from './core/core.module';
 import { LayoutModule } from './layout/layout.module';
 import { EmployeeDetailsModule } from './component/employee-details/employee-details.module';
 import { ToastrModule } from 'ngx-toastr';
+import { ReportsModule } from './component/reports/reports.module';
 
 
 
@@ -23,12 +24,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 @NgModule({
   declarations: [
     AppComponent,
-   
-
-
-
-
-
   ],
   imports: [
     BrowserModule,
@@ -54,7 +49,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       progressAnimation: 'increasing',
       preventDuplicates: true,
       toastClass: 'ngx-toastr toast-top-custom' // custom width/height
-    })
+    }),
+     ReportsModule,
     
   ],
   providers: [],

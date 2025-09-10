@@ -4,8 +4,10 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-
-  constructor(private http: HttpClient) {}
+baseUrl:any
+  constructor(private http: HttpClient) {
+   this.baseUrl=environment.apiUrl
+  }
   private TOKEN_KEY = 'jwt_token';
 
   // login(request: any) {
@@ -13,21 +15,23 @@ export class AuthService {
   // }
 
   login(request: any): Observable<any> {
-    
-    let  baseUrl = 'environment.apiUrl';
-    return this.http.post(`${baseUrl}/login`, request);
+    return this.http.post(`${this.baseUrl}/login`, request);
   }
-
   getEmpListDetails(request: any) : Observable<any> {
-    let  baseUrl = 'environment.apiUrl';
-    return this.http.post(`${baseUrl}/getEmployeeList`, request);
+    return this.http.post(`${this.baseUrl}/getEmployeeList`, request);
   }
-
  addEmployee(request: any): Observable<any>{
-  let baseUrl = 'environment.apiUrl'
-  return this.http.post(`${baseUrl}/registoreEmployee`, request);
+    return this.http.post(`${this.baseUrl}/registoreEmployee`, request);
  }
-
+ saveAttendance(request: any): Observable<any>{
+    return this.http.post(`${this.baseUrl}/saveAttendance`, request);
+ }
+getReport(requestdata:any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}/attendanceReport`, requestdata);
+  }
+ downloadReportPdf(requestdata:any): Observable<any> {
+  return this.http.post<any>(`${this.baseUrl}/attendanceReport/pdf`, requestdata);
+  }
 
 
 

@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { AttendanceRequest, EmployeeAttendance } from 'src/app/model/AttendanceRequest .model';
 declare var bootstrap: any;
 
 
@@ -9,10 +11,11 @@ declare var bootstrap: any;
 type Status = 'Full Day' | 'Half Day' | 'Late' | 'Absent' | null;
 
 interface Employee {
-  id: number;
+  employeeCode: number;
   name: string;
   designation: string;
   status: Status;
+  
   
   // add other fields if needed (employeeCode, factory, etc.)
 }
@@ -35,20 +38,29 @@ export class AttendanceComponent {
   today: string = new Date().toISOString().split('T')[0];
   isPopupOpen = false;
   useselectedDate: string = '';
+ attendanceDate: string = new Date().toISOString().substring(0, 10);
 
-
+ constructor(private http: HttpClient,
+  private authService:AuthService
+){}
   ngOnInit(): void {
-    // Dummy data (replace with API fetch)
-    this.employees = [
-      { id: 1, name: 'John Smith', designation: 'Supervisor', status: null },
-      { id: 2, name: 'Sarah Johnson', designation: 'Manager', status: null },
-      { id: 3, name: 'Mike Brown', designation: 'Driver', status: null },
-      { id: 4, name: 'Priya Desai', designation: 'Worker', status: null },
-      { id: 5, name: 'Ramesh Patil', designation: 'Supervisor', status: null },
-      { id: 6, name: 'Asha More', designation: 'Worker', status: null },
-      { id: 7, name: 'Vikram Rao', designation: 'Driver', status: null },
-      { id: 8, name: 'Sita Kulkarni', designation: 'Manager', status: null }
-    ];
+    this.getEmplyees()
+  }
+  getEmplyees(){
+  let requestdata={
+       fromDate:'',
+       toDate:'',
+       employeeCode:'',
+       day:this.attendanceDate
+  }
+    this.authService.getReport(requestdata)
+  .subscribe({
+    next: (res) => {
+      if (res.statusCode === 200) {
+        this.employees = res.jsonStr;
+        }
+      }
+    })
   }
 
   // --- Filtering & getters ---
@@ -98,7 +110,7 @@ export class AttendanceComponent {
   markAllFiltered(status: Exclude<Status, null>): void {
     const filtered = this.filteredEmployees;
     filtered.forEach(fe => {
-      const original = this.employees.find(e => e.id === fe.id);
+      const original = this.employees.find(e => e.employeeCode === fe.employeeCode);
       if (original) original.status = status;
     });
   }
@@ -107,22 +119,42 @@ export class AttendanceComponent {
   clearAllFiltered(): void {
     const filtered = this.filteredEmployees;
     filtered.forEach(fe => {
-      const original = this.employees.find(e => e.id === fe.id);
+      const original = this.employees.find(e => e.employeeCode === fe.employeeCode);
       if (original) original.status = null;
     });
   }
 
   // Save attendance (hook this to API)
   saveAttendance(): void {
-    const marked = this.totalMarked;
-    // replace with API call
-    console.log('Saving attendance payload:', this.employees);
-    alert(`Attendance saved for ${marked} employee(s).`);
+     const attendanceList: EmployeeAttendance[] = this.employees.map(emp => ({
+      employeeId: emp.employeeCode,
+      status: emp.status || 'NotMarked',
+      attendanceDate: this.attendanceDate
+    }));
+
+    const request: AttendanceRequest = {
+      adminId: '100', 
+      action: 'Insert',
+      attendanceList
+    };
+
+      this.authService.getReport(request)
+       .subscribe({
+      next: (res) => {
+      if (res.statusCode === 200) {
+        console.log('Attendance saved:', res);
+          alert('Attendance saved successfully!');
+        }
+      },
+      error: err => {
+          console.error('Error saving attendance', err);
+        }
+    })
   }
 
   // Helpers for template (optional)
   trackByEmployee(index: number, emp: Employee) {
-    return emp.id;
+    return emp.employeeCode;
   }
 
 
@@ -168,9 +200,9 @@ export class AttendanceComponent {
   addEmployee() {
     if (this.newEmployee.name && this.newEmployee.designation) {
       const newId = this.employees.length > 0 
-        ? Math.max(...this.employees.map(e => e.id)) + 1 
+        ? Math.max(...this.employees.map(e => e.employeeCode)) + 1 
         : 1;
-      this.employees.push({ ...this.newEmployee, id: newId });
+      this.employees.push({ ...this.newEmployee, employeeCode: newId });
       this.closeAddPopup();
     } else {
       alert('Please fill all fields.');

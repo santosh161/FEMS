@@ -18,12 +18,12 @@ export const navbardata=[
     routerLink: 'employee-salary',
     icon: 'fa-solid fa-money-bill-wave', 
     label: 'MENU.salary'
-  }
+  },
    
-//    {
-//     routerLink:'report',
-//     icon:'fa-regular fa-file',
-//     label:'Reports'  
-//    }
+{
+    routerLink:'reports',
+    icon:'fa-regular fa-file',
+    label:'MENU.REPORTS'  
+   }
    
 ]
