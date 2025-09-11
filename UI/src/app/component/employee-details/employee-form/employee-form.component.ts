@@ -29,7 +29,7 @@ export class EmployeeFormComponent implements OnChanges {
       lastName: ['', Validators.required],
       designation: ['', Validators.required],
       factory: ['', Validators.required],
-      salary: [null, [Validators.required, Validators.min(5000)]],
+      salary: [null, Validators.required],
       deposit: [0],
       aadhar: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
       carNo: [''],

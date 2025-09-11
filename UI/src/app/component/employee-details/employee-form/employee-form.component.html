@@ -1,6 +1,14 @@
 <div class="custom-popup">
   <div class="custom-popup-content">
-    <h5>{{ isAddMode ? 'Add Employee' : 'Edit Employee' }}</h5>
+    <!-- <h5>{{ isAddMode ? 'Add Employee' : 'Edit Employee' }}</h5> -->
+
+    <div class="popup-header d-flex justify-content-between align-items-center mb-3">
+      <h5 class="m-0">{{ isAddMode ? 'Add Employee' : 'Edit Employee' }}</h5>
+      
+        <div><span class="material-symbols-outlined btn-close"  type="button" (click)="onClose()">
+          close
+          </span></div>
+    </div>
 
     <form [formGroup]="employeeForm" (ngSubmit)="onSave()">
       <!-- First / Middle / Last Name -->
@@ -46,7 +54,7 @@
         <div class="col-md-6 col-12 mb-2">
           <label>Salary</label>
           <input type="number" placeholder="Enter salary" class="form-control form-control-sm" formControlName="salary">
-          <small class="text-danger" *ngIf="f['salary'].touched && f['salary'].invalid">Minimum salary is ₹5000</small>
+          <small class="text-danger" *ngIf="f['salary'].touched && f['salary'].invalid">salary is required.</small>
         </div>
         <div class="col-md-6 col-12 mb-2">
           <label>Deposit</label>
