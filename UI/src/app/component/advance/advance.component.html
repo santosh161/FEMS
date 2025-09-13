@@ -1,0 +1,90 @@
+<div class="d-flex flex-wrap align-items-center gap-2 mb-2 mt-2">
+    <!-- Employee Search -->
+    <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 120px;">
+      <div class="input-group input-group-sm">
+        <span class="input-group-text">
+          <span class="material-symbols-outlined">search</span>
+        </span>
+        <input type="text"
+               class="form-control"
+               placeholder="Search..."
+               [(ngModel)]="searchText"
+               (input)="filterEmployees()">
+      </div>
+    </div>
+  
+    <!-- Factory Dropdown -->
+    <div class="flex-grow-1 flex-sm-grow-0" style="min-width: 120px;">
+      <div class="input-group input-group-sm">
+        <span class="input-group-text">
+          <span class="material-symbols-outlined">factory</span>
+        </span>
+        <select class="form-control" [(ngModel)]="selectedFactory" (change)="filterEmployees()">
+          <option value="">All Factories</option>
+          <option *ngFor="let f of factories" [value]="f">{{ f }}</option>
+        </select>
+      </div>
+    </div>
+  
+    <!-- Add Employee Button -->
+    <div style="min-width: 100px;" (click)="openAddEmployeePopup()">
+      <button class="btn btn-sm btn-success w-100">
+        <span class="material-symbols-outlined">person_add</span>
+        <span class="d-none d-sm-inline ms-1">Add Employee</span>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Employee Table -->
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-sm">
+      <thead class="table-light">
+        <tr>
+          <th>Sr no</th>
+          <th>Name</th>
+          <th>Designation</th>
+          <th>Factory</th>
+          <th>Salary</th>
+          <th>Mobile 1</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emp of filteredEmployees; trackBy: trackByEmployee">
+          <td>{{ emp.id }}</td>
+          <td>{{ emp.firstName }} {{ emp.middleName }} {{ emp.lastName }}</td>
+          <td>{{ emp.designation }}</td>
+          <td>{{ emp.factory }}</td>
+          <td>₹{{ emp.salary | number }}</td>
+          <td>{{ emp.mobile1 }}</td>
+          <td class="d-flex gap-1">
+            <button class="btn btn-outline-primary btn-sm" (click)="openEditEmployee(emp)">
+              <span class="material-symbols-outlined">edit</span>
+            </button>
+            <button class="btn btn-outline-danger btn-sm" (click)="confirmDeleteEmployee(emp)">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Employee Popup -->
+
+  <!-- <div class="custom-popup" *ngIf="isEmployeePopupOpen">  
+  <app-employee-form
+    *ngIf="isEmployeePopupOpen"
+    [isAddMode]="isAddMode"
+    [employee]="selectedEmployee"
+    [designations]="designations"
+    [factories]="factories"
+    [states]="states"
+    [countries]="countries"
+    (save)="handleSave($event)"
+    (close)="closeEmployeePopup()">
+  </app-employee-form>
+  </div>
+   -->
+  
+  
