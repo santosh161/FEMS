@@ -3,24 +3,14 @@ import { AuthService } from 'src/app/core/services/auth.service';
 
 
 export interface Employee {
-  id: number;
-  firstName: string;
-  middleName?: string;
-  lastName: string;
-  designation: string;
-  factory: string;
-  salary: number;
-  deposit: number;
-  aadhar: string;
-  carNo?: string;
-  panNo?: string;
-  mobile1: string;
-  mobile2?: string;
-  village: string;
-  taluka?: string;
-  district?: string;
-  country: string;
-  state: string;
+  id: number;        // Sr No
+  name: string;      // Full Name
+  mobileNo: string;  // Mobile Number
+  source: string;    // Source
+  reason: string;    // Reason
+  credit: number;    // Credit
+  debit: number;     // Debit
+  total: number;     // Total = credit - debit
 }
 
 
@@ -53,43 +43,23 @@ export class AdvanceComponent {
       this.employees = [
         {
           id: 1,
-          firstName: 'John',
-          middleName: 'D.',
-          lastName: 'Smith',
-          designation: 'Worker',
-          factory: 'Factory A',
-          salary: 18000,
-          deposit: 5000,
-          aadhar: '123456789012', // removed dashes to match validator
-          carNo: 'MH12AB1234',
-          panNo: 'ABCDE1234F',
-          mobile1: '9876543210',
-          mobile2: '9123456780',
-          village: 'Village X',
-          taluka: 'Taluka A',
-          district: 'Pune',
-          country: 'India',
-          state: 'Maharashtra'
+          name: 'John D. Smith',
+          mobileNo: '9876543210',
+          source: 'Factory A',
+          reason: 'Advance Request',
+          credit: 18000,
+          debit: 5000,
+          total: 18000 - 5000
         },
         {
           id: 2,
-          firstName: 'Asha',
-          middleName: '',
-          lastName: 'More',
-          designation: 'Supervisor',
-          factory: 'Factory B',
-          salary: 22000,
-          deposit: 7000,
-          aadhar: '234567890123', // removed dashes
-          carNo: 'MH14XY4567',
-          panNo: 'FGHIJ5678K',
-          mobile1: '9001234567',
-          mobile2: '9823456789',
-          village: 'Village Y',
-          taluka: 'Taluka B',
-          district: 'Solapur',
-          country: 'India',
-          state: 'Maharashtra'
+          name: 'Asha More',
+          mobileNo: '9001234567',
+          source: 'Factory B',
+          reason: 'Medical',
+          credit: 22000,
+          debit: 7000,
+          total: 22000 - 7000
         }
       ];
       this.filteredEmployees = [...this.employees];
@@ -150,27 +120,32 @@ export class AdvanceComponent {
     }
   
     confirmDeleteEmployee(emp: Employee) {
-      const confirmed = confirm(`Are you sure you want to delete ${emp.firstName} ${emp.lastName}?`);
+      const confirmed = confirm(`Are you sure you want to delete ${emp.name}?`);
       if (confirmed) {
-        this.deleteEmployee(emp);
+        this.deleteEmployee(emp.id);
       }
     }
-  
-    deleteEmployee(emp: Employee) {
-      this.employees = this.employees.filter(e => e.id !== emp.id);
+    
+    deleteEmployee(id: number) {
+      this.employees = this.employees.filter(e => e.id !== id);
       this.filteredEmployees = [...this.employees];
+    }
+
+
+    viewEmployee(emp: Employee) {
+      alert(`Viewing details of: ${emp.name}`);
     }
   
     filterEmployees() {
       const text = this.searchText.toLowerCase();
       const factory = this.selectedFactory;
-  
+    
       this.filteredEmployees = this.employees.filter(emp =>
-        (emp.firstName.toLowerCase().includes(text) ||
-         (emp.lastName && emp.lastName.toLowerCase().includes(text)) ||
-         emp.designation.toLowerCase().includes(text) ||
-         emp.factory.toLowerCase().includes(text)) &&
-        (factory === '' || emp.factory === factory)
+        (emp.name.toLowerCase().includes(text) ||
+         emp.source.toLowerCase().includes(text) ||
+         emp.reason.toLowerCase().includes(text)) &&
+        (factory === '' || emp.reason === factory)
       );
     }
+    
 }
