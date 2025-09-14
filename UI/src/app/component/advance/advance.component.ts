@@ -137,7 +137,7 @@ export class AdvanceComponent {
     }
   
     filterEmployees() {
-      const text = this.searchText.toLowerCase();
+      const text = this.searchText.toLowerCase();  
       const factory = this.selectedFactory;
     
       this.filteredEmployees = this.employees.filter(emp =>
